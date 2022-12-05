@@ -1,4 +1,19 @@
 //!
+//!
+//! ```
+//! use polyvec::*;
+//!
+//! let mut v: PolyVec = Vec::<(usize, usize)>::with_capacity(128).into();
+//!
+//! for _ in 0..10 {
+//!     let g: Vec<usize> = v.try_into().unwrap();
+//!
+//!     assert!(g.capacity() >= 256);
+//!     v = g.into();
+//! }
+//!
+//! ```
+//!
 
 use std::mem::size_of;
 
