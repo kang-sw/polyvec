@@ -28,3 +28,29 @@ fn non_trivial() {
     let g: Vec<usize> = v.try_into().unwrap();
     assert!(g.capacity() * size_of::<usize>() == cap * size_of::<Arc<usize>>());
 }
+
+#[test]
+fn reuse_src() {
+    let src_vec: Vec<_> = (0..256).collect();
+    let mut poly = PolyVec::new::<&usize>();
+
+    for i in 1..=3 {
+        println!("ITERATION {i} --- ");
+
+        let mut refs: Vec<&usize> = poly.try_into().unwrap();
+        let mut prev_capacity = refs.capacity();
+        let mut num_realloc = 0;
+
+        for i in 0..src_vec.len() {
+            refs.push(&src_vec[i]);
+            if prev_capacity != refs.capacity() {
+                println!("  Cap {prev_capacity} -> {}", refs.capacity());
+                prev_capacity = refs.capacity();
+                num_realloc += 1;
+            }
+        }
+
+        println!(" => reallocation: {num_realloc}");
+        poly = refs.into();
+    }
+}
