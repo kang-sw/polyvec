@@ -1,0 +1,13 @@
+[package]
+name = "polyvec"
+version = "0.1.0"
+edition = "2021"
+description = "Reuse vector capacity"
+authors = ["kang-sw <ki6080@gmail.com>"]
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+raw-parts = "1"
+thiserror = "1"
